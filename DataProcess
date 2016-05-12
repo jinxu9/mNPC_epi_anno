@@ -1,0 +1,29 @@
+
+# mapping 
+
+for file in `ls *.fastq`
+do
+
+echo $file
+time=`date`
+echo $time
+
+bowtie2   -p 16  -x  /home/jinxu/DB/mmu9/mm9_UCSC_genome/mm9_all -U $file  -S  $file.trim.sam 1>$file.mapping.log 2>$file.mapping.er
+
+time=`date`
+echo $time
+done
+# sam2 bam 
+
+# remove duplicates and convert to bed
+for file in `ls *.rmdup`
+do
+samtools view $file | perl parseSam2Bed.pl - >$file.bed
+done
+
+# bed to binary 
+java -jar /home/jinxu/Software/ChromHMM/ChromHMM.jar   BinarizeBed -b 500 /home/jinxu/DB/mmu9/mm9_UCSC_genome/mm9_chr.chrsize  ../bed_file markeTable ./binary_file_bin500
+
+# learning model
+java -jar /home/jinxu/Software/ChromHMM/ChromHMM.jar LearnModel -b 500 binary_file_bin500/  model_output_16_bin500_new 16 mm9
+
