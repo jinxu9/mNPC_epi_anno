@@ -3,9 +3,7 @@ epigenome annotation of mouse neural progenitor cells.
 
 1. Data resouse 
 
-2. Data procession
+2. Data procession and Command lines
 
-3. Command line
-
-4. Result
+3. Result
 
