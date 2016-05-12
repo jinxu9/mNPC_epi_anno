@@ -1,1 +1,4 @@
 
+Usage :
+
+samtools view $file.bam | parseSam2Bed.pl -> $file.bed
